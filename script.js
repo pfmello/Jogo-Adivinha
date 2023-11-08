@@ -10,6 +10,10 @@ const highscoreElement = document.querySelector('.highscore');
 
 const bodyElement = document.querySelector('body');
 
+const displayMessage = function (message) {
+  messageElement.textContent = message;
+};
+
 // Número Secreto
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 console.log(secretNumber);
@@ -21,11 +25,11 @@ btnCheckElement.addEventListener('click', function () {
 
   // Se palpite estiver vazio
   if (!guess) {
-    messageElement.textContent = 'Coloque um número, seu 🙉!';
+    displayMessage('Coloque um número, seu 🙉!');
 
     //Player vence o jogo !
   } else if (guess === secretNumber) {
-    messageElement.textContent = 'Parabéns seu mongol, venceu ! 🎈';
+    displayMessage('Parabéns seu mongol, venceu ! 🎈');
     bodyElement.style.backgroundColor = '#60b347';
     numberElement.style.width = '30rem';
     numberElement.textContent = secretNumber;
@@ -34,23 +38,15 @@ btnCheckElement.addEventListener('click', function () {
       highscore = score;
       highscoreElement.textContent = highscore;
     }
-  } else if (guess > secretNumber) {
-    // Palpite maior que o número secreto
+  } else if (guess !== secretNumber) {
     if (score > 0) {
       score--;
+      messageElement.textContent =
+        guess > secretNumber ? ' Muito alto 🙄' : ' Muito baixo 🤯';
       scoreElement.textContent = score;
-      messageElement.textContent = ' Muito alto 🙄';
     } else {
-      messageElement.textContent = ' Perdeu e se fudeu 🤡';
-    }
-  } else if (guess < secretNumber) {
-    // Palpite menor que o número secreto
-    if (score > 0) {
-      score--;
-      scoreElement.textContent = score;
-      messageElement.textContent = ' Muito baixo 🤯';
-    } else {
-      messageElement.textContent = ' Perdeu e se fudeu 🤡';
+      displayMessage(' Perdeu e se fudeu 🤡');
+      scoreElement.textContent = 0;
     }
   }
 });
@@ -58,7 +54,7 @@ btnCheckElement.addEventListener('click', function () {
 againButtonElement.addEventListener('click', function () {
   score = 20;
   secretNumber = Math.floor(Math.random() * 20) + 1;
-  messageElement.textContent = 'Comece a adivinhar...';
+  displayMessage('Comece a adivinhar...');
   scoreElement.textContent = score;
   numberElement.textContent = '?';
   document.querySelector('.guess').value = '';
