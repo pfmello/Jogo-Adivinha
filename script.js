@@ -41,8 +41,9 @@ btnCheckElement.addEventListener('click', function () {
   } else if (guess !== secretNumber) {
     if (score > 0) {
       score--;
-      messageElement.textContent =
-        guess > secretNumber ? ' Muito alto 🙄' : ' Muito baixo 🤯';
+      displayMessage(
+        guess > secretNumber ? ' Muito alto 🙄' : ' Muito baixo 🤯'
+      );
       scoreElement.textContent = score;
     } else {
       displayMessage(' Perdeu e se fudeu 🤡');
